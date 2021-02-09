@@ -1,0 +1,58 @@
+web scraping script
+------------------------------------
+1. Installing modules:
+    -->Requests
+    --->smtplib
+    -->selenium package
+ 
+2. importing the modules
+
+3. Locating elements
+   There are many methods available in the Selenium API to select elements on the page. You can use:
+   -->Tag name
+   -->Class name
+   -->IDs
+   -->XPath
+   -->CSS selectors
+   
+4. using the elements to login website and check for bookings availabale for "texas" or not
+
+   driver = webdriver.Chrome(location of chrome driver)
+   url = url_of_the _web_site
+   driver.get(url)
+   checkbox = driver.find_element_by_class_name("checkbox")
+   checkbox.click()
+   button1 = driver.find_element_by_xpath("/html/body/button")
+   button1.click()
+   text= "/html/body/input"
+   driver.find_element_by_xpath(text).click()
+   driver.find_element_by_xpath(text).send_keys("texas")
+   try:
+      dates = "/html/bodydiv[1]/font/font"
+   except KeyError:
+      dates = 'available'
+      
+
+6. If available then used notification via smtp
+
+
+    if dates=='available':
+        conn = smtplib.SMTP('smtp.gmail.com:587')
+        conn.ehlo() # call this to start the connection
+        conn.starttls() # starts tls encryption. When we send our password it will be encrypted.
+        conn.login('sender@gmail.com', 'pwd')
+        msg = "\r\n".join([
+             "From: sender@gmail.com",
+             "To: reciever@gmail.com",
+             "Subject: Status from Appointment portral",
+             "Hi,",
+             "Dates are available",
+             "Thanks!"
+             ])
+       conn.sendmail('sender@gmail.com', 'reciever@gmail.com', msg)
+       conn.quit()
+
+7. To run this program every you can use windows task manager and shebang line in the first which will run the script at scheduled time.
+   Shebang- This will let Windows know to use the Python interpreter when calling the script outside of IDLE.
+
+8. You can schedule this script with Windows Task Manager to run on daily basis.
